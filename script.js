@@ -51,11 +51,11 @@ const htmllinks = [
     'https://pacureok.github.io/FNAF1/',
     'https://pacureok.github.io/FNAF2/',
     'https://pacureok.github.io/FNAF3/',
-    'https://irv77.github.io/hd_fnaf/4/',
+    'https://pacureok.github.io/fnaf4/', // AGREGADO: URL para FNAF 4 (indice 3)
     'https://irv77.github.io/hd_fnaf/w/',
     "javascript:alert('Sorry! We have not added Sister Location to web browser yet...');",
     'https://irv77.github.io/hd_fnaf/ps/',
-    'https://pacureok.github.io/UCNFNAF/', // UCN es el índice 7
+    'https://pacureok.github.io/UCNFNAF/',
     "javascript:alert('Sorry! There is not Help Wanted 1 in web browser...');",
     "javascript:alert('Sorry! There is not Security Breach in web browser...');",
     "javascript:alert('Sorry! There is not Help Wanted 2 in web browser...');"
@@ -297,9 +297,6 @@ function updateCarousel() {
     // Para que funcione bien con tamaños variables y centrado, deberías calcular la posición de la tarjeta actual
     // y el centro del contenedor visible.
 
-    // Por el momento, la solución más simple para asegurar la vista es centrar la tarjeta seleccionada en el contenedor padre
-    // usando `scrollIntoView` o ajustando el `transform` para que el `selectedCard` sea el foco.
-    
     // Una forma simple si no estás usando scroll-snap:
     // Mueve el slider para que la tarjeta actual esté al principio, luego ajusta
     const newPosition = -currentIndex * (selectedCardWidth + cardGap); // o un valor medio si los tamaños varían mucho
@@ -365,23 +362,12 @@ function changeGameSelected(index) {
 
 
     // --- Lógica para establecer el href dinámicamente según launcherSHO ---
-    // ¡IMPORTANTE! Esto se encargará de los enlaces para TODOS los juegos.
-    // Si ya tienes un `href` directo en el HTML para FNAF 1, 2, 3 y UCN,
-    // esta parte del JavaScript sobrescribirá el `href` del HTML si `launcherSHO` no es 'html'.
-    // Si quieres que el HTML tenga la máxima prioridad para esos 4 juegos,
-    // puedes añadir una condición aquí para no modificar sus href si ya están definidos.
-
-    // Este es el ajuste clave: para FNAF 1, 2, 3, UCN (índice 7), siempre queremos su HTML Link.
-    // Para los demás, seguimos la lógica de launcherSHO.
-    
-    // Primero, asegura que `cardSelectorSource` sea un array iterable y que el elemento exista.
-    // También asegúrate de que el botón PLAY esté dentro de una etiqueta `<a>` dentro de `.game-card`.
-
     const currentCardAnchor = cardSelector[currentIndex].querySelector('a');
 
     if (currentCardAnchor) { // Asegura que el <a> exista dentro de la tarjeta
         // Indices de los juegos que deben ir SIEMPRE a la web HTML específica
-        const specificHtmlGames = [0, 1, 2, 7]; // FNAF 1, 2, 3, UCN
+        // AGREGADO: 3 para FNAF 4
+        const specificHtmlGames = [0, 1, 2, 3, 7]; // FNAF 1, 2, 3, FNAF 4, UCN
 
         if (specificHtmlGames.includes(currentIndex)) {
             currentCardAnchor.href = htmllinks[currentIndex]; // Siempre apunta al HTML
